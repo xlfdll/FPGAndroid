@@ -1,0 +1,44 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/pref_group_general">
+        <EditTextPreference
+            android:key="@string/pref_key_length"
+            android:title="@string/pref_title_length"
+            android:defaultValue="16"
+            android:numeric="integer"
+            android:selectAllOnFocus="true"
+            android:singleLine="true" />
+
+        <SwitchPreference
+            android:key="@string/pref_key_autocopy"
+            android:title="@string/pref_title_autocopy"
+            android:defaultValue="true" />
+
+        <SwitchPreference
+            android:key="@string/pref_key_rememberlastsalt"
+            android:title="@string/pref_title_rememberlast"
+            android:defaultValue="true" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/pref_group_randomsalt">
+        <EditTextPreference
+            android:key="@string/pref_key_randomsalt"
+            android:title="@string/pref_title_editrandomsalt"
+            android:selectAllOnFocus="true"
+            android:singleLine="true" />
+
+        <Preference
+            android:key="@string/pref_key_randomsaltgenerate"
+            android:title="@string/pref_title_randomsaltgenerate" />
+
+        <Preference
+            android:key="@string/pref_key_randomsaltbackup"
+            android:title="@string/pref_title_randomsaltbackup"
+            android:summary="@string/pref_desc_randomsaltbackup"/>
+
+        <Preference
+            android:key="@string/pref_key_randomsaltrestore"
+            android:title="@string/pref_title_randomsaltrestore"
+            android:summary="@string/pref_desc_randomsaltrestore"/>
+    </PreferenceCategory>
+</PreferenceScreen>

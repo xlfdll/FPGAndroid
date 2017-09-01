@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">Fkulc\'s Password Generator</string>
+
+    <string name="keyword_label">Keyword</string>
+    <string name="salt_label">Salt</string>
+    <string name="length_label">Length</string>
+    <string name="generate_button">Generate</string>
+    <string name="settings_title">Options</string>
+
+    <!-- Strings related to Settings -->
+    <string name="pref_key_length" translatable="false">passwordLength</string>
+    <string name="pref_key_autocopy" translatable="false">isAutoCopy</string>
+    <string name="pref_key_rememberlastsalt" translatable="false">doesRememberLastSaltInput</string>
+    <string name="pref_key_lastsalt" translatable="false">lastSaltInput</string>
+    <string name="pref_key_randomsalt" translatable="false">randomSalt</string>
+
+    <string name="pref_key_randomsaltgenerate" translatable="false">button_randomSaltGenerate</string>
+    <string name="pref_key_randomsaltbackup" translatable="false">button_randomSaltBackup</string>
+    <string name="pref_key_randomsaltrestore" translatable="false">button_randomSaltRestore</string>
+
+    <string name="pref_title_autocopy">Copy to clipboard automatically</string>
+    <string name="pref_title_rememberlast">Remember last user salt</string>
+    <string name="pref_group_general">General</string>
+    <string name="pref_group_randomsalt">Random Salt</string>
+    <string name="pref_title_length">Set generated password length</string>
+    <string name="pref_title_editrandomsalt">Edit random salt</string>
+    <string name="pref_title_randomsaltgenerate">Generate a new random salt</string>
+    <string name="pref_title_randomsaltbackup">Backup current random salt</string>
+    <string name="pref_title_randomsaltrestore">Restore random salt from file</string>
+    <string name="pref_desc_randomsaltbackup">Random salt will be saved to FPG_Salt.dat</string>
+    <string name="pref_desc_randomsaltrestore">Random salt will be restored from FPG_Salt.dat</string>
+
+    <string name="alert_message_firstrun">Welcome! This is your first time to use this program.\n\nA new random salt has been created for you.\n\nIt is highly recommended to backup your new random salt or restore your existing one in Options screen as soon as possible to avoid losing access to your passwords.</string>
+    <string name="alert_message_randomsaltchange">If the random salt had been replaced, current passwords would be unavailable.\n\nContinue?</string>
+    <string name="alert_message_randomsaltfilenotfound">File %s is not found.</string>
+    <string name="alert_title_warning">Warning</string>
+    <string name="alert_title_welcome">Welcome!</string>
+    <string name="alert_button_ok">OK</string>
+    <string name="alert_button_yes">Yes</string>
+    <string name="alert_button_no">No</string>
+
+    <string name="popup_randomsaltgenerated">A new random salt has been generated.</string>
+    <string name="popup_randomsaltsaved">The random salt has been saved to %s.</string>
+    <string name="popup_randomsaltrestored">The random salt has been restored from %s.</string>
+    <string name="popup_exception">The following error occurred:\n\n%s</string>
+    <string name="popup_keywordempty">Keyword is empty.</string>
+    <string name="popup_saltempty">Salt is empty.</string>
+</resources>

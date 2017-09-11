@@ -5,10 +5,8 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.media.MediaScannerConnection;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -16,6 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
@@ -68,12 +67,12 @@ public class MainActivity extends AppCompatActivity {
                 TextView passwordTextView = (TextView) findViewById(R.id.passwordTextView);
 
                 if (keywordEditText.getText().toString().isEmpty()) {
-                    Snackbar.make(findViewById(R.id.mainLayout),
-                            R.string.popup_keywordempty, Snackbar.LENGTH_SHORT)
+                    Toast.makeText(getApplicationContext(),
+                            R.string.popup_keywordempty, Toast.LENGTH_SHORT)
                             .show();
                 } else if (saltEditText.getText().toString().isEmpty()) {
-                    Snackbar.make(findViewById(R.id.mainLayout),
-                            R.string.popup_saltempty, Snackbar.LENGTH_SHORT)
+                    Toast.makeText(getApplicationContext(),
+                            R.string.popup_saltempty, Toast.LENGTH_SHORT)
                             .show();
                 } else {
                     try {

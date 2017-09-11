@@ -3,7 +3,6 @@ package xlfdll.nb.fpg;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.media.MediaScannerConnection;
 import android.support.v7.app.AlertDialog;
 
 /**

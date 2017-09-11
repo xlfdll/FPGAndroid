@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,7 +49,7 @@ public class OptionsFragment extends PreferenceFragment {
         button.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override
             public boolean onPreferenceClick(Preference preference) {
-                Activity activity = getActivity();
+                final Activity activity = getActivity();
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
                 builder.setMessage(R.string.alert_message_randomsaltchange)
@@ -66,7 +66,7 @@ public class OptionsFragment extends PreferenceFragment {
 
                                         dialog.dismiss();
 
-                                        Snackbar.make(getView(), R.string.popup_randomsaltgenerated, Snackbar.LENGTH_SHORT)
+                                        Toast.makeText(activity.getBaseContext(), R.string.popup_randomsaltgenerated, Toast.LENGTH_SHORT)
                                                 .show();
                                     }
                                 }
@@ -103,9 +103,9 @@ public class OptionsFragment extends PreferenceFragment {
                             new String[]{PasswordHelper.RandomSaltBackupDataMIMEType},
                             null);
 
-                    Snackbar.make(getView(),
+                    Toast.makeText(activity.getBaseContext(),
                             String.format(getString(R.string.popup_randomsaltsaved),
-                                    PasswordHelper.RandomSaltBackupDataFileName), Snackbar.LENGTH_SHORT)
+                                    PasswordHelper.RandomSaltBackupDataFileName), Toast.LENGTH_SHORT)
                             .show();
 
                 } catch (IOException e) {
@@ -142,9 +142,9 @@ public class OptionsFragment extends PreferenceFragment {
                                                         PasswordHelper.loadRandomSalt(file))
                                                         .apply();
 
-                                                Snackbar.make(getView(),
+                                                Toast.makeText(activity.getBaseContext(),
                                                         String.format(getString(R.string.popup_randomsaltrestored),
-                                                                PasswordHelper.RandomSaltBackupDataFileName), Snackbar.LENGTH_SHORT)
+                                                                PasswordHelper.RandomSaltBackupDataFileName), Toast.LENGTH_SHORT)
                                                         .show();
                                             } catch (IOException e) {
                                                 AppHelper.showMessageDialog(activity, "",
@@ -162,9 +162,9 @@ public class OptionsFragment extends PreferenceFragment {
                             );
 
                 } else {
-                    Snackbar.make(getView(),
+                    Toast.makeText(activity.getBaseContext(),
                             String.format(getString(R.string.alert_message_randomsaltfilenotfound),
-                                    PasswordHelper.RandomSaltBackupDataFileName), Snackbar.LENGTH_SHORT)
+                                    PasswordHelper.RandomSaltBackupDataFileName), Toast.LENGTH_SHORT)
                             .show();
                 }
 

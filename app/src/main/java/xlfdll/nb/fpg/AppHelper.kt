@@ -3,7 +3,7 @@ package xlfdll.nb.fpg
 import android.content.Context
 import android.content.DialogInterface
 import android.content.SharedPreferences
-import android.support.v7.app.AlertDialog
+import androidx.appcompat.app.AlertDialog
 
 /**
  * Created by Xlfdll on 2017/08/31.
@@ -18,7 +18,9 @@ internal object AppHelper {
         builder.setMessage(message)
                 .setTitle(title)
                 .setPositiveButton("OK"
-                ) { dialog, whichButton -> dialog.dismiss() }
+                ) { dialog, _ ->
+                    dialog.dismiss()
+                }
                 .create()
                 .show()
     }
@@ -29,7 +31,9 @@ internal object AppHelper {
         builder.setMessage(messageId)
                 .setTitle(titleId)
                 .setPositiveButton("OK"
-                ) { dialog, whichButton -> dialog.dismiss() }
+                ) { dialog, _ ->
+                    dialog.dismiss()
+                }
                 .create()
                 .show()
     }

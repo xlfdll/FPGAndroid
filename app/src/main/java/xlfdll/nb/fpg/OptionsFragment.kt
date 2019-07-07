@@ -1,53 +1,62 @@
 package xlfdll.nb.fpg
 
-import android.app.Activity
-import android.content.DialogInterface
 import android.content.SharedPreferences
 import android.media.MediaScannerConnection
 import android.os.Bundle
-import android.preference.EditTextPreference
-import android.preference.Preference
-import android.preference.PreferenceFragment
-import android.support.v7.app.AlertDialog
 import android.widget.Toast
+import androidx.preference.EditTextPreference
+import androidx.preference.Preference
+import androidx.preference.PreferenceFragmentCompat
+import androidx.appcompat.app.AlertDialog
 
-import java.io.File
 import java.io.IOException
 
-class OptionsFragment : PreferenceFragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
+class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
+    override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.preferences)
+        setPreferencesFromResource(R.xml.preferences, rootKey)
 
-        if (isAdded) {
-            AppHelper.Settings!!.registerOnSharedPreferenceChangeListener { sharedPreferences, key ->
-                val prefKey = getString(R.string.pref_key_randomsalt)
+        initializePreferenceButtons()
+    }
 
-                if (key == prefKey) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key != null) {
+            val prefKey = getString(R.string.pref_key_randomsalt)
+
+            when (key) {
+                prefKey -> {
                     val randomSaltPreference = findPreference(prefKey) as EditTextPreference
 
-                    randomSaltPreference.text = sharedPreferences.getString(key,
-                            null)
+                    randomSaltPreference.text = sharedPreferences?.getString(key, null)
                 }
             }
-
-            initializePreferenceButtons()
         }
     }
 
-    fun initializePreferenceButtons() {
+    override fun onResume() {
+        preferenceScreen.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+
+        super.onResume()
+    }
+
+    override fun onPause() {
+        preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+
+        super.onPause()
+    }
+
+    // Need to use requireContext()
+    private fun initializePreferenceButtons() {
         var button = findPreference(getString(R.string.pref_key_randomsaltgenerate))
 
         button.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            val activity = activity
-            val builder = AlertDialog.Builder(activity)
+            val currentContext = requireContext()
+            val builder = AlertDialog.Builder(currentContext)
 
             builder.setMessage(R.string.alert_message_randomsaltchange)
                     .setTitle(R.string.alert_title_warning)
                     .setPositiveButton(R.string.alert_button_yes
-                    ) { dialog, whichButton ->
+                    ) { dialog, _ ->
                         val prefEditor = AppHelper.Settings!!.edit()
 
                         prefEditor.putString(
@@ -57,11 +66,13 @@ class OptionsFragment : PreferenceFragment() {
 
                         dialog.dismiss()
 
-                        Toast.makeText(activity.baseContext, R.string.popup_randomsaltgenerated, Toast.LENGTH_SHORT)
+                        Toast.makeText(currentContext, R.string.popup_randomsaltgenerated, Toast.LENGTH_SHORT)
                                 .show()
                     }
                     .setNegativeButton(R.string.alert_button_no
-                    ) { dialog, whichButton -> dialog.dismiss() }
+                    ) { dialog, _ ->
+                        dialog.dismiss()
+                    }
                     .create()
                     .show()
 
@@ -71,25 +82,25 @@ class OptionsFragment : PreferenceFragment() {
         button = findPreference(getString(R.string.pref_key_randomsaltbackup))
 
         button.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            val activity = activity
+            val currentContext = requireContext()
 
             try {
-                val file = PasswordHelper.getRandomSaltFile(activity)
+                val file = PasswordHelper.getRandomSaltFile(currentContext)
                 PasswordHelper.saveRandomSalt(file,
-                        AppHelper.Settings!!.getString(getString(R.string.pref_key_randomsalt), null))
+                        AppHelper.Settings!!.getString(getString(R.string.pref_key_randomsalt), "")!!)
 
                 // Force system to scan the new file in order to show in File Explorer on PC
                 MediaScannerConnection.scanFile(activity,
                         arrayOf(file.absolutePath),
                         arrayOf(PasswordHelper.RandomSaltBackupDataMIMEType), null)
 
-                Toast.makeText(activity.baseContext,
+                Toast.makeText(currentContext,
                         String.format(getString(R.string.popup_randomsaltsaved),
                                 PasswordHelper.RandomSaltBackupDataFileName), Toast.LENGTH_SHORT)
                         .show()
 
             } catch (e: IOException) {
-                AppHelper.showMessageDialog(activity, "",
+                AppHelper.showMessageDialog(currentContext, "",
                         String.format(getString(R.string.popup_exception),
                                 e.localizedMessage))
             }
@@ -100,16 +111,16 @@ class OptionsFragment : PreferenceFragment() {
         button = findPreference(getString(R.string.pref_key_randomsaltrestore))
 
         button.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            val activity = activity
-            val builder = AlertDialog.Builder(activity)
+            val currentContext = requireContext()
+            val builder = AlertDialog.Builder(currentContext)
 
-            val file = PasswordHelper.getRandomSaltFile(activity)
+            val file = PasswordHelper.getRandomSaltFile(currentContext)
 
             if (file.exists()) {
                 builder.setMessage(R.string.alert_message_randomsaltchange)
                         .setTitle(R.string.alert_title_warning)
                         .setPositiveButton(R.string.alert_button_yes
-                        ) { dialog, whichButton ->
+                        ) { _, _ ->
                             val prefEditor = AppHelper.Settings!!.edit()
 
                             try {
@@ -118,21 +129,23 @@ class OptionsFragment : PreferenceFragment() {
                                         PasswordHelper.loadRandomSalt(file))
                                         .apply()
 
-                                Toast.makeText(activity.baseContext,
+                                Toast.makeText(currentContext,
                                         String.format(getString(R.string.popup_randomsaltrestored),
                                                 PasswordHelper.RandomSaltBackupDataFileName), Toast.LENGTH_SHORT)
                                         .show()
                             } catch (e: IOException) {
-                                AppHelper.showMessageDialog(activity, "",
+                                AppHelper.showMessageDialog(currentContext, "",
                                         String.format(getString(R.string.popup_exception),
                                                 e.localizedMessage))
                             }
                         }
                         .setNegativeButton("No"
-                        ) { dialog, whichButton -> dialog.dismiss() }
+                        ) { dialog, _ ->
+                            dialog.dismiss()
+                        }
 
             } else {
-                Toast.makeText(activity.baseContext,
+                Toast.makeText(currentContext,
                         String.format(getString(R.string.alert_message_randomsaltfilenotfound),
                                 PasswordHelper.RandomSaltBackupDataFileName), Toast.LENGTH_SHORT)
                         .show()

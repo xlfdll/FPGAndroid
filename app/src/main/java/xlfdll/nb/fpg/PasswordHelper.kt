@@ -20,9 +20,9 @@ import java.util.Random
  */
 
 internal object PasswordHelper {
-    val RandomSaltLength = 64
-    val RandomSaltBackupDataFileName = "FPG_Salt.dat"
-    val RandomSaltBackupDataMIMEType = "text/plain"
+    const val RandomSaltLength = 64
+    const val RandomSaltBackupDataFileName = "FPG_Salt.dat"
+    const val RandomSaltBackupDataMIMEType = "text/plain"
 
     @Throws(UnsupportedEncodingException::class, NoSuchAlgorithmException::class)
     fun generatePassword(context: Context, keyword: String, salt: String, length: Int): String {

@@ -33,8 +33,11 @@
     <string name="alert_message_firstrun">Welcome! This is your first time to use this program.\n\nA new random salt has been created for you.\n\nIt is highly recommended to backup your new random salt or restore your existing one in Options screen as soon as possible to avoid losing access to your passwords.</string>
     <string name="alert_message_randomsaltchange">If the random salt had been replaced, current passwords would be unavailable.\n\nContinue?</string>
     <string name="alert_message_randomsaltfilenotfound">File %s is not found.</string>
+    <string name="alert_message_readstoragepermissionrequest">To perform random salt restore, the storage access permission must be granted by you.\n\nPlease grant permissions in next prompted screen and try to perform restore operation again.</string>
+    <string name="alert_message_writestoragepermissionrequest">To perform random salt backup, the storage access permission must be granted by you.\n\nPlease grant permissions in next prompted screen and try to perform backup operation again.</string>
     <string name="alert_title_warning">Warning</string>
     <string name="alert_title_welcome">Welcome!</string>
+    <string name="alert_title_permissiondenied">Permission Denied</string>
     <string name="alert_button_ok">OK</string>
     <string name="alert_button_yes">Yes</string>
     <string name="alert_button_no">No</string>

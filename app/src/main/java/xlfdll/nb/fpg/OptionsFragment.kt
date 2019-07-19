@@ -1,13 +1,17 @@
 package xlfdll.nb.fpg
 
 import android.content.SharedPreferences
+import android.content.pm.PackageManager
 import android.media.MediaScannerConnection
+import android.Manifest
 import android.os.Bundle
+import android.os.Environment
 import android.widget.Toast
 import androidx.preference.EditTextPreference
-import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
+import androidx.preference.Preference.OnPreferenceClickListener
 
 import java.io.IOException
 
@@ -49,14 +53,13 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
     private fun initializePreferenceButtons() {
         var button = findPreference(getString(R.string.pref_key_randomsaltgenerate))
 
-        button.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+        button.onPreferenceClickListener = OnPreferenceClickListener {
             val currentContext = requireContext()
             val builder = AlertDialog.Builder(currentContext)
 
             builder.setMessage(R.string.alert_message_randomsaltchange)
                     .setTitle(R.string.alert_title_warning)
-                    .setPositiveButton(R.string.alert_button_yes
-                    ) { dialog, _ ->
+                    .setPositiveButton(R.string.alert_button_yes) { dialog, _ ->
                         val prefEditor = AppHelper.Settings!!.edit()
 
                         prefEditor.putString(
@@ -69,8 +72,7 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
                         Toast.makeText(currentContext, R.string.popup_randomsaltgenerated, Toast.LENGTH_SHORT)
                                 .show()
                     }
-                    .setNegativeButton(R.string.alert_button_no
-                    ) { dialog, _ ->
+                    .setNegativeButton(R.string.alert_button_no) { dialog, _ ->
                         dialog.dismiss()
                     }
                     .create()
@@ -81,28 +83,47 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
 
         button = findPreference(getString(R.string.pref_key_randomsaltbackup))
 
-        button.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+        button.onPreferenceClickListener = OnPreferenceClickListener {
             val currentContext = requireContext()
 
-            try {
-                val file = PasswordHelper.getRandomSaltFile(currentContext)
-                PasswordHelper.saveRandomSalt(file,
-                        AppHelper.Settings!!.getString(getString(R.string.pref_key_randomsalt), "")!!)
+            if (ContextCompat.checkSelfPermission(currentContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                var builder = AlertDialog.Builder(currentContext)
 
-                // Force system to scan the new file in order to show in File Explorer on PC
-                MediaScannerConnection.scanFile(activity,
-                        arrayOf(file.absolutePath),
-                        arrayOf(PasswordHelper.RandomSaltBackupDataMIMEType), null)
-
-                Toast.makeText(currentContext,
-                        String.format(getString(R.string.popup_randomsaltsaved),
-                                PasswordHelper.RandomSaltBackupDataFileName), Toast.LENGTH_SHORT)
+                builder.setMessage(R.string.alert_message_writestoragepermissionrequest)
+                        .setTitle(R.string.alert_title_permissiondenied)
+                        .setPositiveButton("OK") { _, _ ->
+                            requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+                        }
                         .show()
+            } else {
+                try {
+                    var directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
 
-            } catch (e: IOException) {
-                AppHelper.showMessageDialog(currentContext, "",
-                        String.format(getString(R.string.popup_exception),
-                                e.localizedMessage))
+                    if (!directory.exists()) {
+                        directory.mkdirs()
+                    }
+
+                    val file = PasswordHelper.getRandomSaltFile(currentContext)
+
+                    PasswordHelper.saveRandomSalt(file,
+                            AppHelper.Settings!!.getString(getString(R.string.pref_key_randomsalt), "")!!)
+
+                    // Force system to scan the new file in order to show in File Explorer on PC
+                    MediaScannerConnection.scanFile(activity,
+                            arrayOf(file.absolutePath),
+                            arrayOf(PasswordHelper.RandomSaltBackupDataMIMEType), null)
+
+                    Toast.makeText(currentContext,
+                            String.format(getString(R.string.popup_randomsaltsaved),
+                                    PasswordHelper.RandomSaltBackupDataFileName), Toast.LENGTH_SHORT)
+                            .show()
+
+                } catch (e: IOException) {
+                    AppHelper.showMessageDialog(currentContext, "",
+                            String.format(getString(R.string.popup_exception),
+                                    e.localizedMessage))
+                }
             }
 
             true
@@ -110,48 +131,54 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
 
         button = findPreference(getString(R.string.pref_key_randomsaltrestore))
 
-        button.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+        button.onPreferenceClickListener = OnPreferenceClickListener {
             val currentContext = requireContext()
             val builder = AlertDialog.Builder(currentContext)
 
-            val file = PasswordHelper.getRandomSaltFile(currentContext)
-
-            if (file.exists()) {
-                builder.setMessage(R.string.alert_message_randomsaltchange)
-                        .setTitle(R.string.alert_title_warning)
-                        .setPositiveButton(R.string.alert_button_yes
-                        ) { _, _ ->
-                            val prefEditor = AppHelper.Settings!!.edit()
-
-                            try {
-                                prefEditor.putString(
-                                        getString(R.string.pref_key_randomsalt),
-                                        PasswordHelper.loadRandomSalt(file))
-                                        .apply()
-
-                                Toast.makeText(currentContext,
-                                        String.format(getString(R.string.popup_randomsaltrestored),
-                                                PasswordHelper.RandomSaltBackupDataFileName), Toast.LENGTH_SHORT)
-                                        .show()
-                            } catch (e: IOException) {
-                                AppHelper.showMessageDialog(currentContext, "",
-                                        String.format(getString(R.string.popup_exception),
-                                                e.localizedMessage))
-                            }
+            if (ContextCompat.checkSelfPermission(currentContext, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                builder.setMessage(R.string.alert_message_readstoragepermissionrequest)
+                        .setTitle(R.string.alert_title_permissiondenied)
+                        .setPositiveButton("OK") { _, _ ->
+                            requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 0)
                         }
-                        .setNegativeButton("No"
-                        ) { dialog, _ ->
-                            dialog.dismiss()
-                        }
-
-            } else {
-                Toast.makeText(currentContext,
-                        String.format(getString(R.string.alert_message_randomsaltfilenotfound),
-                                PasswordHelper.RandomSaltBackupDataFileName), Toast.LENGTH_SHORT)
                         .show()
-            }
+            } else {
+                val file = PasswordHelper.getRandomSaltFile(currentContext)
 
-            builder.create().show()
+                if (file.exists()) {
+                    builder.setMessage(R.string.alert_message_randomsaltchange)
+                            .setTitle(R.string.alert_title_warning)
+                            .setPositiveButton(R.string.alert_button_yes) { _, _ ->
+                                val prefEditor = AppHelper.Settings!!.edit()
+
+                                try {
+                                    prefEditor.putString(
+                                            getString(R.string.pref_key_randomsalt),
+                                            PasswordHelper.loadRandomSalt(file))
+                                            .apply()
+
+                                    Toast.makeText(currentContext,
+                                            String.format(getString(R.string.popup_randomsaltrestored),
+                                                    PasswordHelper.RandomSaltBackupDataFileName), Toast.LENGTH_SHORT)
+                                            .show()
+                                } catch (e: IOException) {
+                                    AppHelper.showMessageDialog(currentContext, "",
+                                            String.format(getString(R.string.popup_exception),
+                                                    e.localizedMessage))
+                                }
+                            }
+                            .setNegativeButton("No") { dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            .show()
+
+                } else {
+                    AppHelper.showMessageDialog(currentContext, "",
+                            String.format(getString(R.string.alert_message_randomsaltfilenotfound),
+                                    PasswordHelper.RandomSaltBackupDataFileName))
+                }
+            }
 
             true
         }

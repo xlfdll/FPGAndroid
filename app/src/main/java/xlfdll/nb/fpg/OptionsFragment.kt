@@ -25,7 +25,7 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key != null) {
-            val prefKey = getString(R.string.pref_key_randomsalt)
+            val prefKey = getString(R.string.pref_key_random_salt)
 
             when (key) {
                 prefKey -> {
@@ -51,25 +51,25 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
 
     // Need to use requireContext()
     private fun initializePreferenceButtons() {
-        var button = findPreference(getString(R.string.pref_key_randomsaltgenerate))
+        var button = findPreference(getString(R.string.pref_key_random_salt_generate))
 
         button.onPreferenceClickListener = OnPreferenceClickListener {
             val currentContext = requireContext()
             val builder = AlertDialog.Builder(currentContext)
 
-            builder.setMessage(R.string.alert_message_randomsaltchange)
+            builder.setMessage(R.string.alert_message_random_salt_change)
                     .setTitle(R.string.alert_title_warning)
                     .setPositiveButton(R.string.alert_button_yes) { dialog, _ ->
                         val prefEditor = AppHelper.Settings!!.edit()
 
                         prefEditor.putString(
-                                getString(R.string.pref_key_randomsalt),
+                                getString(R.string.pref_key_random_salt),
                                 PasswordHelper.generateSalt(PasswordHelper.RandomSaltLength))
                                 .apply()
 
                         dialog.dismiss()
 
-                        Toast.makeText(currentContext, R.string.popup_randomsaltgenerated, Toast.LENGTH_SHORT)
+                        Toast.makeText(currentContext, R.string.popup_random_salt_generated, Toast.LENGTH_SHORT)
                                 .show()
                     }
                     .setNegativeButton(R.string.alert_button_no) { dialog, _ ->
@@ -81,7 +81,7 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
             true
         }
 
-        button = findPreference(getString(R.string.pref_key_randomsaltbackup))
+        button = findPreference(getString(R.string.pref_key_random_salt_backup))
 
         button.onPreferenceClickListener = OnPreferenceClickListener {
             val currentContext = requireContext()
@@ -90,8 +90,8 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
                     != PackageManager.PERMISSION_GRANTED) {
                 var builder = AlertDialog.Builder(currentContext)
 
-                builder.setMessage(R.string.alert_message_writestoragepermissionrequest)
-                        .setTitle(R.string.alert_title_permissiondenied)
+                builder.setMessage(R.string.alert_message_write_storage_permission_request)
+                        .setTitle(R.string.alert_title_permission_denied)
                         .setPositiveButton("OK") { _, _ ->
                             requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
                         }
@@ -107,7 +107,7 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
                     val file = PasswordHelper.getRandomSaltFile(currentContext)
 
                     PasswordHelper.saveRandomSalt(file,
-                            AppHelper.Settings!!.getString(getString(R.string.pref_key_randomsalt), "")!!)
+                            AppHelper.Settings!!.getString(getString(R.string.pref_key_random_salt), "")!!)
 
                     // Force system to scan the new file in order to show in File Explorer on PC
                     MediaScannerConnection.scanFile(activity,
@@ -115,7 +115,7 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
                             arrayOf(PasswordHelper.RandomSaltBackupDataMIMEType), null)
 
                     Toast.makeText(currentContext,
-                            String.format(getString(R.string.popup_randomsaltsaved),
+                            String.format(getString(R.string.popup_random_salt_saved),
                                     PasswordHelper.RandomSaltBackupDataFileName), Toast.LENGTH_SHORT)
                             .show()
 
@@ -129,7 +129,7 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
             true
         }
 
-        button = findPreference(getString(R.string.pref_key_randomsaltrestore))
+        button = findPreference(getString(R.string.pref_key_random_salt_restore))
 
         button.onPreferenceClickListener = OnPreferenceClickListener {
             val currentContext = requireContext()
@@ -137,8 +137,8 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
 
             if (ContextCompat.checkSelfPermission(currentContext, Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
-                builder.setMessage(R.string.alert_message_readstoragepermissionrequest)
-                        .setTitle(R.string.alert_title_permissiondenied)
+                builder.setMessage(R.string.alert_message_read_storage_permission_request)
+                        .setTitle(R.string.alert_title_permission_denied)
                         .setPositiveButton("OK") { _, _ ->
                             requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 0)
                         }
@@ -147,19 +147,19 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
                 val file = PasswordHelper.getRandomSaltFile(currentContext)
 
                 if (file.exists()) {
-                    builder.setMessage(R.string.alert_message_randomsaltchange)
+                    builder.setMessage(R.string.alert_message_random_salt_change)
                             .setTitle(R.string.alert_title_warning)
                             .setPositiveButton(R.string.alert_button_yes) { _, _ ->
                                 val prefEditor = AppHelper.Settings!!.edit()
 
                                 try {
                                     prefEditor.putString(
-                                            getString(R.string.pref_key_randomsalt),
+                                            getString(R.string.pref_key_random_salt),
                                             PasswordHelper.loadRandomSalt(file))
                                             .apply()
 
                                     Toast.makeText(currentContext,
-                                            String.format(getString(R.string.popup_randomsaltrestored),
+                                            String.format(getString(R.string.popup_random_salt_restored),
                                                     PasswordHelper.RandomSaltBackupDataFileName), Toast.LENGTH_SHORT)
                                             .show()
                                 } catch (e: IOException) {
@@ -175,7 +175,7 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
 
                 } else {
                     AppHelper.showMessageDialog(currentContext, "",
-                            String.format(getString(R.string.alert_message_randomsaltfilenotfound),
+                            String.format(getString(R.string.alert_message_random_salt_file_not_found),
                                     PasswordHelper.RandomSaltBackupDataFileName))
                 }
             }

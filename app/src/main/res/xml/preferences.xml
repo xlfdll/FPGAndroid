@@ -10,35 +10,35 @@
 
         <SwitchPreference
             android:defaultValue="true"
-            android:key="@string/pref_key_autocopy"
-            android:title="@string/pref_title_autocopy" />
+            android:key="@string/pref_key_auto_copy"
+            android:title="@string/pref_title_auto_copy" />
 
         <SwitchPreference
             android:defaultValue="true"
-            android:key="@string/pref_key_rememberlastsalt"
-            android:title="@string/pref_title_rememberlast" />
+            android:key="@string/pref_key_remember_last_salt"
+            android:title="@string/pref_title_remember_last_salt" />
 
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/pref_group_randomsalt">
+    <PreferenceCategory android:title="@string/pref_group_random_salt">
         <EditTextPreference
-            android:key="@string/pref_key_randomsalt"
+            android:key="@string/pref_key_random_salt"
             android:selectAllOnFocus="true"
             android:singleLine="true"
-            android:title="@string/pref_title_editrandomsalt" />
+            android:title="@string/pref_title_edit_random_salt" />
 
         <Preference
-            android:key="@string/pref_key_randomsaltgenerate"
-            android:title="@string/pref_title_randomsaltgenerate" />
+            android:key="@string/pref_key_random_salt_generate"
+            android:title="@string/pref_title_random_salt_generate" />
 
         <Preference
-            android:key="@string/pref_key_randomsaltbackup"
-            android:summary="@string/pref_desc_randomsaltbackup"
-            android:title="@string/pref_title_randomsaltbackup" />
+            android:key="@string/pref_key_random_salt_backup"
+            android:summary="@string/pref_desc_random_salt_backup"
+            android:title="@string/pref_title_random_salt_backup" />
 
         <Preference
-            android:key="@string/pref_key_randomsaltrestore"
-            android:summary="@string/pref_desc_randomsaltrestore"
-            android:title="@string/pref_title_randomsaltrestore" />
+            android:key="@string/pref_key_random_salt_restore"
+            android:summary="@string/pref_desc_random_salt_restore"
+            android:title="@string/pref_title_random_salt_restore" />
     </PreferenceCategory>
 </PreferenceScreen>

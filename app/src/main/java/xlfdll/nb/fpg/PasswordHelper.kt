@@ -29,7 +29,7 @@ internal object PasswordHelper {
         var sb = StringBuilder()
 
         sb.append(keyword)
-        sb.append(AppHelper.Settings!!.getString(context.getString(R.string.pref_key_randomsalt),
+        sb.append(AppHelper.Settings!!.getString(context.getString(R.string.pref_key_random_salt),
                 PasswordHelper.generateSalt(PasswordHelper.RandomSaltLength)))
         sb.append(salt)
 

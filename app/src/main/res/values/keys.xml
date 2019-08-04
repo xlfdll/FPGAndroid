@@ -6,7 +6,7 @@
     <string name="pref_key_user_salt" translatable="false">UserSalt</string>
     <string name="pref_key_random_salt" translatable="false">RandomSalt</string>
 
-    <string name="pref_key_random_salt_generate" translatable="false">RandomSaltGenerateButton</string>
-    <string name="pref_key_random_salt_backup" translatable="false">RandomSaltBackupButton</string>
-    <string name="pref_key_random_salt_restore" translatable="false">RandomSaltRestoreButton</string>
+    <string name="pref_key_button_random_salt_generate" translatable="false">RandomSaltGenerateButton</string>
+    <string name="pref_key_button_random_salt_backup" translatable="false">RandomSaltBackupButton</string>
+    <string name="pref_key_button_random_salt_restore" translatable="false">RandomSaltRestoreButton</string>
 </resources>

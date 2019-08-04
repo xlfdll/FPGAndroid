@@ -28,16 +28,16 @@
             android:title="@string/pref_title_edit_random_salt" />
 
         <Preference
-            android:key="@string/pref_key_random_salt_generate"
+            android:key="@string/pref_key_button_random_salt_generate"
             android:title="@string/pref_title_random_salt_generate" />
 
         <Preference
-            android:key="@string/pref_key_random_salt_backup"
+            android:key="@string/pref_key_button_random_salt_backup"
             android:summary="@string/pref_desc_random_salt_backup"
             android:title="@string/pref_title_random_salt_backup" />
 
         <Preference
-            android:key="@string/pref_key_random_salt_restore"
+            android:key="@string/pref_key_button_random_salt_restore"
             android:summary="@string/pref_desc_random_salt_restore"
             android:title="@string/pref_title_random_salt_restore" />
     </PreferenceCategory>

@@ -51,7 +51,7 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
 
     // Need to use requireContext()
     private fun initializePreferenceButtons() {
-        var button = findPreference(getString(R.string.pref_key_random_salt_generate))
+        var button = findPreference(getString(R.string.pref_key_button_random_salt_generate))
 
         button.onPreferenceClickListener = OnPreferenceClickListener {
             val currentContext = requireContext()
@@ -81,7 +81,7 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
             true
         }
 
-        button = findPreference(getString(R.string.pref_key_random_salt_backup))
+        button = findPreference(getString(R.string.pref_key_button_random_salt_backup))
 
         button.onPreferenceClickListener = OnPreferenceClickListener {
             val currentContext = requireContext()
@@ -129,7 +129,7 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
             true
         }
 
-        button = findPreference(getString(R.string.pref_key_random_salt_restore))
+        button = findPreference(getString(R.string.pref_key_button_random_salt_restore))
 
         button.onPreferenceClickListener = OnPreferenceClickListener {
             val currentContext = requireContext()

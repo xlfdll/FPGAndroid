@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         // Show last salt input
         val saltEditText = findViewById(R.id.saltEditText) as EditText?
-        saltEditText!!.setText(AppHelper.Settings!!.getString(getString(R.string.pref_key_last_salt), ""))
+        saltEditText!!.setText(AppHelper.Settings!!.getString(getString(R.string.pref_key_user_salt), ""))
     }
 
     // Add menu items to action bar
@@ -75,11 +75,11 @@ class MainActivity : AppCompatActivity() {
                                 keywordEditText.text.toString(),
                                 saltEditText.text.toString(),
                                 Integer.parseInt(AppHelper.Settings!!.getString(
-                                        getString(R.string.pref_key_length),
+                                        getString(R.string.pref_key_password_length),
                                         Integer.toString(PasswordHelper.RandomSaltLength))!!))
 
                         // Auto copy?
-                        if (AppHelper.Settings!!.getBoolean(getString(R.string.pref_key_remember_last_salt), true)) {
+                        if (AppHelper.Settings!!.getBoolean(getString(R.string.pref_key_auto_copy_password), true)) {
                             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                             val clip = ClipData.newPlainText(getString(R.string.app_name), passwordTextView.text)
                             clipboard.primaryClip = clip
@@ -88,11 +88,11 @@ class MainActivity : AppCompatActivity() {
                         // Remember last salt input?
                         val editor = AppHelper.Settings!!.edit()
 
-                        if (AppHelper.Settings!!.getBoolean(getString(R.string.pref_key_remember_last_salt), true)) {
-                            editor.putString(getString(R.string.pref_key_last_salt), saltEditText.text.toString())
+                        if (AppHelper.Settings!!.getBoolean(getString(R.string.pref_key_remember_user_salt), true)) {
+                            editor.putString(getString(R.string.pref_key_user_salt), saltEditText.text.toString())
                                     .commit()
                         } else {
-                            editor.putString(getString(R.string.pref_key_last_salt), "")
+                            editor.putString(getString(R.string.pref_key_user_salt), "")
                                     .commit()
                         }
                     } catch (e: UnsupportedEncodingException) {

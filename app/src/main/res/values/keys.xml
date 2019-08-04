@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="pref_key_length" translatable="false">passwordLength</string>
-    <string name="pref_key_auto_copy" translatable="false">isAutoCopy</string>
-    <string name="pref_key_remember_last_salt" translatable="false">doesRememberLastSaltInput</string>
-    <string name="pref_key_last_salt" translatable="false">lastSaltInput</string>
-    <string name="pref_key_random_salt" translatable="false">randomSalt</string>
+    <string name="pref_key_password_length" translatable="false">PasswordLength</string>
+    <string name="pref_key_auto_copy_password" translatable="false">AutoCopyPassword</string>
+    <string name="pref_key_remember_user_salt" translatable="false">RememberUserSalt</string>
+    <string name="pref_key_user_salt" translatable="false">UserSalt</string>
+    <string name="pref_key_random_salt" translatable="false">RandomSalt</string>
 
-    <string name="pref_key_random_salt_generate" translatable="false">button_randomSaltGenerate</string>
-    <string name="pref_key_random_salt_backup" translatable="false">button_randomSaltBackup</string>
-    <string name="pref_key_random_salt_restore" translatable="false">button_randomSaltRestore</string>
+    <string name="pref_key_random_salt_generate" translatable="false">RandomSaltGenerateButton</string>
+    <string name="pref_key_random_salt_backup" translatable="false">RandomSaltBackupButton</string>
+    <string name="pref_key_random_salt_restore" translatable="false">RandomSaltRestoreButton</string>
 </resources>

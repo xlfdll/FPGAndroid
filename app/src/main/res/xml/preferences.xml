@@ -2,7 +2,7 @@
     <PreferenceCategory android:title="@string/pref_group_general">
         <EditTextPreference
             android:defaultValue="16"
-            android:key="@string/pref_key_length"
+            android:key="@string/pref_key_password_length"
             android:numeric="integer"
             android:selectAllOnFocus="true"
             android:singleLine="true"
@@ -10,12 +10,12 @@
 
         <SwitchPreference
             android:defaultValue="true"
-            android:key="@string/pref_key_auto_copy"
+            android:key="@string/pref_key_auto_copy_password"
             android:title="@string/pref_title_auto_copy" />
 
         <SwitchPreference
             android:defaultValue="true"
-            android:key="@string/pref_key_remember_last_salt"
+            android:key="@string/pref_key_remember_user_salt"
             android:title="@string/pref_title_remember_last_salt" />
 
     </PreferenceCategory>

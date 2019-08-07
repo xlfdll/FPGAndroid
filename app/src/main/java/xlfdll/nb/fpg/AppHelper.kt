@@ -10,7 +10,7 @@ import androidx.appcompat.app.AlertDialog
  */
 
 internal object AppHelper {
-    var Settings: SharedPreferences? = null
+    lateinit var Settings: SharedPreferences
 
     fun showMessageDialog(context: Context, title: String, message: String) {
         val builder = AlertDialog.Builder(context)

@@ -60,7 +60,7 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
             builder.setMessage(R.string.alert_message_random_salt_change)
                     .setTitle(R.string.alert_title_warning)
                     .setPositiveButton(R.string.alert_button_yes) { dialog, _ ->
-                        val prefEditor = AppHelper.Settings!!.edit()
+                        val prefEditor = AppHelper.Settings.edit()
 
                         prefEditor.putString(
                                 getString(R.string.pref_key_random_salt),
@@ -107,7 +107,7 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
                     val file = PasswordHelper.getRandomSaltFile(currentContext)
 
                     PasswordHelper.saveRandomSalt(file,
-                            AppHelper.Settings!!.getString(getString(R.string.pref_key_random_salt), "")!!)
+                            AppHelper.Settings.getString(getString(R.string.pref_key_random_salt), "")!!)
 
                     // Force system to scan the new file in order to show in File Explorer on PC
                     MediaScannerConnection.scanFile(activity,
@@ -150,7 +150,7 @@ class OptionsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPr
                     builder.setMessage(R.string.alert_message_random_salt_change)
                             .setTitle(R.string.alert_title_warning)
                             .setPositiveButton(R.string.alert_button_yes) { _, _ ->
-                                val prefEditor = AppHelper.Settings!!.edit()
+                                val prefEditor = AppHelper.Settings.edit()
 
                                 try {
                                     prefEditor.putString(

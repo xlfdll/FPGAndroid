@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity() {
         // Initialize settings
         AppHelper.Settings = PreferenceManager.getDefaultSharedPreferences(applicationContext)
 
-        if (AppHelper.Settings!!.getString(getString(R.string.pref_key_random_salt), null) == null) {
-            val prefEditor = AppHelper.Settings!!.edit()
+        if (AppHelper.Settings.getString(getString(R.string.pref_key_random_salt), null) == null) {
+            val prefEditor = AppHelper.Settings.edit()
 
             prefEditor.putString(
                     getString(R.string.pref_key_random_salt),
@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
 
         // Show last salt input
-        saltEditText.setText(AppHelper.Settings!!.getString(getString(R.string.pref_key_user_salt), ""))
+        saltEditText.setText(AppHelper.Settings.getString(getString(R.string.pref_key_user_salt), ""))
     }
 
     // Add menu items to action bar
@@ -66,21 +66,21 @@ class MainActivity : AppCompatActivity() {
                         passwordTextView!!.text = PasswordHelper.generatePassword(this,
                                 keywordEditText.text.toString(),
                                 saltEditText.text.toString(),
-                                Integer.parseInt(AppHelper.Settings!!.getString(
+                                Integer.parseInt(AppHelper.Settings.getString(
                                         getString(R.string.pref_key_password_length),
                                         Integer.toString(PasswordHelper.RandomSaltLength))!!))
 
                         // Auto copy?
-                        if (AppHelper.Settings!!.getBoolean(getString(R.string.pref_key_auto_copy_password), true)) {
+                        if (AppHelper.Settings.getBoolean(getString(R.string.pref_key_auto_copy_password), true)) {
                             val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                             val clip = ClipData.newPlainText(getString(R.string.app_name), passwordTextView.text)
                             clipboard.primaryClip = clip
                         }
 
                         // Remember last salt input?
-                        val editor = AppHelper.Settings!!.edit()
+                        val editor = AppHelper.Settings.edit()
 
-                        if (AppHelper.Settings!!.getBoolean(getString(R.string.pref_key_remember_user_salt), true)) {
+                        if (AppHelper.Settings.getBoolean(getString(R.string.pref_key_remember_user_salt), true)) {
                             editor.putString(getString(R.string.pref_key_user_salt), saltEditText.text.toString())
                                     .commit()
                         } else {

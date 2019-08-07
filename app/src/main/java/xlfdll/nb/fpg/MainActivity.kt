@@ -7,12 +7,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
 
 import java.io.UnsupportedEncodingException
 import java.security.NoSuchAlgorithmException
@@ -23,8 +21,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         // Set up action bar
-        val actionToolbar = findViewById(R.id.actionToolbar) as Toolbar?
-        setSupportActionBar(actionToolbar)
+        setSupportActionBar(findViewById(R.id.actionToolbar))
 
         // Initialize settings
         AppHelper.Settings = PreferenceManager.getDefaultSharedPreferences(applicationContext)
@@ -43,8 +40,7 @@ class MainActivity : AppCompatActivity() {
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
 
         // Show last salt input
-        val saltEditText = findViewById(R.id.saltEditText) as EditText?
-        saltEditText!!.setText(AppHelper.Settings!!.getString(getString(R.string.pref_key_user_salt), ""))
+        saltEditText.setText(AppHelper.Settings!!.getString(getString(R.string.pref_key_user_salt), ""))
     }
 
     // Add menu items to action bar
@@ -57,10 +53,6 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_generate -> {
-                val keywordEditText = findViewById(R.id.keywordEditText) as EditText?
-                val saltEditText = findViewById(R.id.saltEditText) as EditText?
-                val passwordTextView = findViewById(R.id.passwordTextView) as TextView?
-
                 if (keywordEditText!!.text.length == 0) {
                     Toast.makeText(applicationContext,
                             R.string.popup_keyword_empty, Toast.LENGTH_SHORT)

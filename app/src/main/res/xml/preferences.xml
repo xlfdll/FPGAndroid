@@ -2,6 +2,8 @@
     <PreferenceCategory android:title="@string/pref_group_general">
         <EditTextPreference
             android:defaultValue="16"
+            android:digits="0123456789"
+            android:inputType="number"
             android:key="@string/pref_key_password_length"
             android:numeric="integer"
             android:selectAllOnFocus="true"
@@ -22,6 +24,7 @@
 
     <PreferenceCategory android:title="@string/pref_group_random_salt">
         <EditTextPreference
+            android:inputType="textVisiblePassword"
             android:key="@string/pref_key_random_salt"
             android:selectAllOnFocus="true"
             android:singleLine="true"

@@ -9,6 +9,8 @@ import android.preference.PreferenceManager
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -41,6 +43,18 @@ class MainActivity : AppCompatActivity() {
 
         // Show last salt input
         saltEditText.setText(AppHelper.Settings.getString(getString(R.string.pref_key_user_salt), ""))
+
+        // Set EditText default actions
+        keywordEditText.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+            when (actionId) {
+                EditorInfo.IME_ACTION_DONE -> {
+                    generatePassword()
+
+                    true
+                }
+                else -> false
+            }
+        })
     }
 
     // Add menu items to action bar
@@ -52,47 +66,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_generate -> {
-                if (keywordEditText!!.text.isEmpty()) {
-                    Toast.makeText(applicationContext,
-                            R.string.popup_keyword_empty, Toast.LENGTH_SHORT)
-                            .show()
-                } else if (saltEditText!!.text.isEmpty()) {
-                    Toast.makeText(applicationContext,
-                            R.string.popup_salt_empty, Toast.LENGTH_SHORT)
-                            .show()
-                } else {
-                    try {
-                        passwordTextView!!.text = PasswordHelper.generatePassword(this,
-                                keywordEditText.text.toString(),
-                                saltEditText.text.toString(),
-                                Integer.parseInt(AppHelper.Settings.getString(
-                                        getString(R.string.pref_key_password_length),
-                                        PasswordHelper.RandomSaltLength.toString())!!))
-
-                        // Auto copy?
-                        if (AppHelper.Settings.getBoolean(getString(R.string.pref_key_auto_copy_password), true)) {
-                            val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                            val clip = ClipData.newPlainText(getString(R.string.app_name), passwordTextView.text)
-                            clipboard.primaryClip = clip
-                        }
-
-                        // Remember last salt input?
-                        val editor = AppHelper.Settings.edit()
-
-                        if (AppHelper.Settings.getBoolean(getString(R.string.pref_key_remember_user_salt), true)) {
-                            editor.putString(getString(R.string.pref_key_user_salt), saltEditText.text.toString())
-                                    .commit()
-                        } else {
-                            editor.putString(getString(R.string.pref_key_user_salt), "")
-                                    .commit()
-                        }
-                    } catch (e: UnsupportedEncodingException) {
-                        e.printStackTrace()
-                    } catch (e: NoSuchAlgorithmException) {
-                        e.printStackTrace()
-                    }
-
-                }
+                generatePassword()
             }
             R.id.action_settings -> {
                 startActivity(Intent(this, OptionsActivity::class.java))
@@ -100,5 +74,48 @@ class MainActivity : AppCompatActivity() {
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun generatePassword() {
+        if (keywordEditText!!.text.isEmpty()) {
+            Toast.makeText(applicationContext,
+                    R.string.popup_keyword_empty, Toast.LENGTH_SHORT)
+                    .show()
+        } else if (saltEditText!!.text.isEmpty()) {
+            Toast.makeText(applicationContext,
+                    R.string.popup_salt_empty, Toast.LENGTH_SHORT)
+                    .show()
+        } else {
+            try {
+                passwordTextView!!.text = PasswordHelper.generatePassword(this,
+                        keywordEditText.text.toString(),
+                        saltEditText.text.toString(),
+                        Integer.parseInt(AppHelper.Settings.getString(
+                                getString(R.string.pref_key_password_length),
+                                PasswordHelper.RandomSaltLength.toString())!!))
+
+                // Auto copy?
+                if (AppHelper.Settings.getBoolean(getString(R.string.pref_key_auto_copy_password), true)) {
+                    val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    val clip = ClipData.newPlainText(getString(R.string.app_name), passwordTextView.text)
+                    clipboard.primaryClip = clip
+                }
+
+                // Remember last salt input?
+                val editor = AppHelper.Settings.edit()
+
+                if (AppHelper.Settings.getBoolean(getString(R.string.pref_key_remember_user_salt), true)) {
+                    editor.putString(getString(R.string.pref_key_user_salt), saltEditText.text.toString())
+                            .commit()
+                } else {
+                    editor.putString(getString(R.string.pref_key_user_salt), "")
+                            .commit()
+                }
+            } catch (e: UnsupportedEncodingException) {
+                e.printStackTrace()
+            } catch (e: NoSuchAlgorithmException) {
+                e.printStackTrace()
+            }
+        }
     }
 }

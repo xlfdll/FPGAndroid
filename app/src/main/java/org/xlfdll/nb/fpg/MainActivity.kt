@@ -1,4 +1,4 @@
-package xlfdll.nb.fpg
+package org.xlfdll.nb.fpg
 
 import android.content.ClipData
 import android.content.ClipboardManager
@@ -52,11 +52,11 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_generate -> {
-                if (keywordEditText!!.text.length == 0) {
+                if (keywordEditText!!.text.isEmpty()) {
                     Toast.makeText(applicationContext,
                             R.string.popup_keyword_empty, Toast.LENGTH_SHORT)
                             .show()
-                } else if (saltEditText!!.text.length == 0) {
+                } else if (saltEditText!!.text.isEmpty()) {
                     Toast.makeText(applicationContext,
                             R.string.popup_salt_empty, Toast.LENGTH_SHORT)
                             .show()
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
                                 saltEditText.text.toString(),
                                 Integer.parseInt(AppHelper.Settings.getString(
                                         getString(R.string.pref_key_password_length),
-                                        Integer.toString(PasswordHelper.RandomSaltLength))!!))
+                                        PasswordHelper.RandomSaltLength.toString())!!))
 
                         // Auto copy?
                         if (AppHelper.Settings.getBoolean(getString(R.string.pref_key_auto_copy_password), true)) {

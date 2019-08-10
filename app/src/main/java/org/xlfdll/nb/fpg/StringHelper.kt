@@ -1,4 +1,4 @@
-package xlfdll.nb.fpg
+package org.xlfdll.nb.fpg
 
 import java.io.UnsupportedEncodingException
 import java.security.MessageDigest

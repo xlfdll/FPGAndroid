@@ -1,4 +1,4 @@
-package xlfdll.nb.fpg
+package org.xlfdll.nb.fpg
 
 import android.content.Intent
 import android.os.Bundle

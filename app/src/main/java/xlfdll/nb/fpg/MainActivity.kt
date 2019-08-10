@@ -45,8 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     // Add menu items to action bar
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.action, menu)
+        menuInflater.inflate(R.menu.action, menu)
         return true
     }
 
@@ -94,16 +93,12 @@ class MainActivity : AppCompatActivity() {
                     }
 
                 }
-
-                return true
             }
             R.id.action_settings -> {
-                val intent = Intent(this, OptionsActivity::class.java)
-                startActivity(intent)
-
-                return true
+                startActivity(Intent(this, OptionsActivity::class.java))
             }
-            else -> return super.onOptionsItemSelected(item)
         }
+
+        return super.onOptionsItemSelected(item)
     }
 }

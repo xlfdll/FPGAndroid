@@ -20,12 +20,12 @@ import java.util.Random
  */
 
 internal object PasswordHelper {
-    const val RandomSaltLength = 64
-    const val RandomSaltBackupDataFileName = "FPG_Salt.dat"
-    const val RandomSaltBackupDataMIMEType = "text/plain"
+    internal const val RandomSaltLength = 64
+    internal const val RandomSaltBackupDataFileName = "FPG_Salt.dat"
+    internal const val RandomSaltBackupDataMIMEType = "text/plain"
 
     @Throws(UnsupportedEncodingException::class, NoSuchAlgorithmException::class)
-    fun generatePassword(context: Context, keyword: String, salt: String, length: Int): String {
+    internal fun generatePassword(context: Context, keyword: String, salt: String, length: Int): String {
         var sb = StringBuilder()
 
         sb.append(keyword)
@@ -52,7 +52,7 @@ internal object PasswordHelper {
         return sb.toString()
     }
 
-    fun generateSalt(length: Int): String {
+    internal fun generateSalt(length: Int): String {
         val basicCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_ []{}<>~`+=,.;:/?|"
 
         val sb = StringBuilder()
@@ -66,7 +66,7 @@ internal object PasswordHelper {
         return sb.toString()
     }
 
-    fun getRandomSaltFile(context: Context): File {
+    internal fun getRandomSaltFile(context: Context): File {
         val state = Environment.getExternalStorageState()
 
         return if (Environment.MEDIA_MOUNTED == state) {
@@ -79,7 +79,7 @@ internal object PasswordHelper {
     }
 
     @Throws(IOException::class)
-    fun loadRandomSalt(file: File?): String? {
+    internal fun loadRandomSalt(file: File?): String? {
         if (file != null) {
             val reader = BufferedReader(InputStreamReader(FileInputStream(file), "UTF-8"))
 
@@ -95,7 +95,7 @@ internal object PasswordHelper {
     }
 
     @Throws(IOException::class)
-    fun saveRandomSalt(file: File?, randomSalt: String) {
+    internal fun saveRandomSalt(file: File?, randomSalt: String) {
         if (file != null) {
             val writer = BufferedWriter(OutputStreamWriter(FileOutputStream(file), "UTF-8"))
 

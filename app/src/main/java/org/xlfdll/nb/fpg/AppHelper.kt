@@ -10,9 +10,9 @@ import androidx.appcompat.app.AlertDialog
  */
 
 internal object AppHelper {
-    lateinit var Settings: SharedPreferences
+    internal lateinit var Settings: SharedPreferences
 
-    fun showMessageDialog(context: Context, title: String, message: String) {
+    internal fun showMessageDialog(context: Context, title: String, message: String) {
         val builder = AlertDialog.Builder(context)
 
         builder.setMessage(message)
@@ -25,7 +25,7 @@ internal object AppHelper {
                 .show()
     }
 
-    fun showMessageDialog(context: Context, titleId: Int, messageId: Int) {
+    internal fun showMessageDialog(context: Context, titleId: Int, messageId: Int) {
         val builder = AlertDialog.Builder(context)
 
         builder.setMessage(messageId)

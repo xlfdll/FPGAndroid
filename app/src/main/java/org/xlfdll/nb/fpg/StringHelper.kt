@@ -9,7 +9,7 @@ import java.security.NoSuchAlgorithmException
  */
 
 internal object StringHelper {
-    fun getBytesString(bytes: ByteArray): String {
+    internal fun getBytesString(bytes: ByteArray): String {
         val sb = StringBuilder()
 
         for (b in bytes) {
@@ -20,7 +20,7 @@ internal object StringHelper {
     }
 
     @Throws(NoSuchAlgorithmException::class, UnsupportedEncodingException::class)
-    fun getHashString(hashAlgorithmName: String, text: String, encoding: String): String {
+    internal fun getHashString(hashAlgorithmName: String, text: String, encoding: String): String {
         val messageDigest = MessageDigest.getInstance(hashAlgorithmName)
 
         messageDigest.update(text.toByteArray(charset(encoding)))

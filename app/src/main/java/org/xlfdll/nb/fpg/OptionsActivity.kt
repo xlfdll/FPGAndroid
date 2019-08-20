@@ -79,7 +79,7 @@ class OptionsActivity : AppCompatActivity() {
                             prefEditor.putString(
                                     getString(R.string.pref_key_random_salt),
                                     PasswordHelper.generateSalt(PasswordHelper.RandomSaltLength))
-                                    .apply()
+                                    .commit()
 
                             dialog.dismiss()
 
@@ -166,7 +166,7 @@ class OptionsActivity : AppCompatActivity() {
                                         prefEditor.putString(
                                                 getString(R.string.pref_key_random_salt),
                                                 PasswordHelper.loadRandomSalt(file))
-                                                .apply()
+                                                .commit()
 
                                         Toast.makeText(currentContext,
                                                 String.format(getString(R.string.popup_random_salt_restored),

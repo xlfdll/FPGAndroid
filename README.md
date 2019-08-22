@@ -1,7 +1,9 @@
 # Fkulc's Password Generator - Android Version
 An Android implementation of [Fkulc's Password Generator (FPG)](https://github.com/xlfdll/FPG)
 
-<a href="https://play.google.com/store/apps/details?id=org.xlfdll.nb.fpg"><img src="https://github.com/xlfdll/xlfdll.github.io/raw/master/images/google-play-badge.png" alt="Get Fkulc's Password Generator (Android) on Google Play Store" height=64></a>
+<a href="https://play.google.com/store/apps/details?id=org.xlfdll.nb.fpg">
+  <img src="https://github.com/xlfdll/xlfdll.github.io/raw/master/images/google-play-badge.png" alt="Get Fkulc's Password Generator (Android) on Google Play Store" height="64">
+</a>
 
 <p align="center">
   <img src="https://github.com/xlfdll/xlfdll.github.io/raw/master/images/projects/FPG/Android/FPGAndroid-Password.png"

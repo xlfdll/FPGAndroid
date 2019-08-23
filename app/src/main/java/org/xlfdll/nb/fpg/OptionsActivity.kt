@@ -100,7 +100,7 @@ class OptionsActivity : AppCompatActivity() {
 
                 if (ContextCompat.checkSelfPermission(currentContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                         != PackageManager.PERMISSION_GRANTED) {
-                    var builder = AlertDialog.Builder(currentContext)
+                    val builder = AlertDialog.Builder(currentContext)
 
                     builder.setMessage(R.string.alert_message_write_storage_permission_request)
                             .setTitle(R.string.alert_title_permission_denied)
@@ -110,7 +110,7 @@ class OptionsActivity : AppCompatActivity() {
                             .show()
                 } else {
                     try {
-                        var directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+                        val directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
 
                         if (!directory.exists()) {
                             directory.mkdirs()

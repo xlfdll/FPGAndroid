@@ -9,7 +9,6 @@ import android.preference.PreferenceManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
@@ -44,7 +43,7 @@ class MainActivity : AppCompatActivity() {
         saltEditText.setText(AppHelper.Settings.getString(getString(R.string.pref_key_user_salt), ""))
 
         // Set EditText default actions
-        keywordEditText.setOnEditorActionListener(TextView.OnEditorActionListener { _, actionId, _ ->
+        keywordEditText.setOnEditorActionListener { _, actionId, _ ->
             when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
                     generatePassword()
@@ -53,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> false
             }
-        })
+        }
     }
 
     // Add menu items to action bar
@@ -76,16 +75,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun generatePassword() {
-        if (keywordEditText!!.text.isEmpty()) {
-            Toast.makeText(applicationContext,
+        when {
+            keywordEditText!!.text.isEmpty() -> Toast.makeText(applicationContext,
                     R.string.popup_keyword_empty, Toast.LENGTH_SHORT)
                     .show()
-        } else if (saltEditText!!.text.isEmpty()) {
-            Toast.makeText(applicationContext,
+            saltEditText!!.text.isEmpty() -> Toast.makeText(applicationContext,
                     R.string.popup_salt_empty, Toast.LENGTH_SHORT)
                     .show()
-        } else {
-            try {
+            else -> try {
                 passwordTextView!!.text = PasswordHelper.generatePassword(this,
                         keywordEditText.text.toString(),
                         saltEditText.text.toString(),

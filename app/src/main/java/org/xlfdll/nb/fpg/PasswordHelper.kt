@@ -2,18 +2,9 @@ package org.xlfdll.nb.fpg
 
 import android.content.Context
 import android.os.Environment
-
-import java.io.BufferedReader
-import java.io.BufferedWriter
-import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
-import java.io.UnsupportedEncodingException
+import java.io.*
 import java.security.NoSuchAlgorithmException
-import java.util.Random
+import java.util.*
 
 /**
  * Created by Xlfdll on 2017/08/29.

@@ -1,7 +1,6 @@
 package org.xlfdll.nb.fpg
 
 import android.content.Context
-import android.content.DialogInterface
 import android.content.SharedPreferences
 import androidx.appcompat.app.AlertDialog
 

@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Set up action bar
+        // Set up action_bar_main bar
         setSupportActionBar(findViewById(R.id.actionToolbar))
 
         // Initialize settings
@@ -55,14 +55,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Add menu items to action bar
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.action, menu)
+    // Add menu items to action_bar_main bar
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.action_bar_main, menu)
+
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item?.itemId) {
             R.id.action_generate -> {
                 generatePassword()
             }

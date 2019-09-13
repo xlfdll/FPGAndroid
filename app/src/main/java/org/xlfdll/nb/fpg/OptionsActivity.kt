@@ -20,8 +20,10 @@ class OptionsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_options)
 
-        // Set up action bar
+        // Set up action_bar_main bar
         setSupportActionBar(findViewById(R.id.actionToolbar))
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         setTitle(R.string.settings_title)
 

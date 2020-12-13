@@ -1,4 +1,6 @@
 # Fkulc's Password Generator - Android Version
+<strong style="color: red;">(Archived. New version is merged into <a href="https://github.com/xlfdll/FPGMobile">FPG Mobile repository</a>)</strong>
+
 An Android implementation of [Fkulc's Password Generator (FPG)](https://github.com/xlfdll/FPG)
 
 <a href="https://play.google.com/store/apps/details?id=org.xlfdll.nb.fpg">
